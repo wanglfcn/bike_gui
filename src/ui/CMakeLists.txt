@@ -1,0 +1,16 @@
+SET(SOURCES screens/ui_Screen1.c
+    ui.c
+    components/ui_comp_hook.c
+    ui_helpers.c
+    images/ui_img_background_png.c
+    images/ui_img_1601502596.c
+    images/ui_img_1798728470.c
+    images/ui_img_left_arr_png.c
+    images/ui_img_light_png.c
+    images/ui_img_batt_full_png.c
+    images/ui_img_batt_mid_png.c
+    images/ui_img_batt_low2_png.c
+    images/ui_img_batt_low_png.c
+    images/ui_img_temperature_png.c)
+
+add_library(ui ${SOURCES})
