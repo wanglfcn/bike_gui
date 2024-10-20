@@ -142,7 +142,7 @@ void lv_draw_tempature_by_canvas()
     lv_draw_label_dsc_t temp_label_dsc;
     lv_draw_label_dsc_init(&temp_label_dsc);
     temp_label_dsc.color = lv_color_white();
-    temp_label_dsc.font = &lv_font_montserrat_14;
+    temp_label_dsc.font = &lv_font_montserrat_16;
 
 
     static lv_color_t cbuf[LV_CANVAS_BUF_SIZE_TRUE_COLOR(TEMP_WIDTH, TEMP_HEIGHT)];
@@ -171,7 +171,7 @@ void lv_draw_battery_by_canvas()
     lv_draw_label_dsc_t temp_label_dsc;
     lv_draw_label_dsc_init(&temp_label_dsc);
     temp_label_dsc.color = lv_color_white();
-    temp_label_dsc.font = &lv_font_montserrat_14;
+    temp_label_dsc.font = &lv_font_montserrat_16;
 
 
     static lv_color_t cbuf[LV_CANVAS_BUF_SIZE_TRUE_COLOR(BATTERY_WIDTH, BATTERY_HEIGHT)];
@@ -200,7 +200,7 @@ void lv_draw_mileage_by_canvas()
     lv_draw_label_dsc_t temp_label_dsc;
     lv_draw_label_dsc_init(&temp_label_dsc);
     temp_label_dsc.color = lv_color_white();
-    temp_label_dsc.font = &lv_font_montserrat_14;
+    temp_label_dsc.font = &lv_font_montserrat_16;
 
 
     static lv_color_t cbuf[LV_CANVAS_BUF_SIZE_TRUE_COLOR(MILE_WIDTH, MILE_HEIGHT)];
@@ -210,7 +210,7 @@ void lv_draw_mileage_by_canvas()
  
     lv_obj_align_to(canvas, ui_mileAge, LV_ALIGN_CENTER, 0, 0);
 
-    lv_canvas_draw_text(canvas, 0, 30, 100, &temp_label_dsc, "100km");
+    lv_canvas_draw_text(canvas, 0, 25, 100, &temp_label_dsc, "100km");
     /*Test the rotation. It requires another buffer where the original image is stored.
      *So copy the current image to buffer and rotate it to the canvas*/
     static lv_color_t cbuf_tmp[MILE_WIDTH * MILE_HEIGHT];
