@@ -101,13 +101,12 @@ lv_img_set_angle(ui_battNone,900);
 ui_batteryLevel = lv_label_create(ui_Screen1);
 lv_obj_set_width( ui_batteryLevel, LV_SIZE_CONTENT);  /// 1
 lv_obj_set_height( ui_batteryLevel, LV_SIZE_CONTENT);   /// 1
-lv_obj_set_x( ui_batteryLevel, -81 );
-lv_obj_set_y( ui_batteryLevel, -115 );
+lv_obj_set_x( ui_batteryLevel, -103 );
+lv_obj_set_y( ui_batteryLevel, -107 );
 lv_obj_set_align( ui_batteryLevel, LV_ALIGN_CENTER );
-lv_label_set_text(ui_batteryLevel,"100%");
+lv_label_set_text(ui_batteryLevel,"");
 lv_obj_set_style_text_color(ui_batteryLevel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
 lv_obj_set_style_text_opa(ui_batteryLevel, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
-lv_obj_set_style_transform_angle(ui_batteryLevel, 900, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_Image8 = lv_img_create(ui_Screen1);
 lv_img_set_src(ui_Image8, &ui_img_temperature_png);
@@ -123,24 +122,22 @@ lv_img_set_angle(ui_Image8,900);
 ui_tempature = lv_label_create(ui_Screen1);
 lv_obj_set_width( ui_tempature, LV_SIZE_CONTENT);  /// 1
 lv_obj_set_height( ui_tempature, LV_SIZE_CONTENT);   /// 1
-lv_obj_set_x( ui_tempature, -85 );
-lv_obj_set_y( ui_tempature, -49 );
+lv_obj_set_x( ui_tempature, -105 );
+lv_obj_set_y( ui_tempature, -42 );
 lv_obj_set_align( ui_tempature, LV_ALIGN_CENTER );
-lv_label_set_text(ui_tempature,"25C");
+lv_label_set_text(ui_tempature,"");
 lv_obj_set_style_text_color(ui_tempature, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
 lv_obj_set_style_text_opa(ui_tempature, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
-lv_obj_set_style_transform_angle(ui_tempature, 900, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_mileAge = lv_label_create(ui_Screen1);
 lv_obj_set_width( ui_mileAge, LV_SIZE_CONTENT);  /// 1
 lv_obj_set_height( ui_mileAge, LV_SIZE_CONTENT);   /// 1
-lv_obj_set_x( ui_mileAge, -72 );
-lv_obj_set_y( ui_mileAge, 53 );
+lv_obj_set_x( ui_mileAge, -101 );
+lv_obj_set_y( ui_mileAge, 65 );
 lv_obj_set_align( ui_mileAge, LV_ALIGN_CENTER );
-lv_label_set_text(ui_mileAge,"100Km");
+lv_label_set_text(ui_mileAge,"");
 lv_obj_set_style_text_color(ui_mileAge, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
 lv_obj_set_style_text_opa(ui_mileAge, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
-lv_obj_set_style_transform_angle(ui_mileAge, 900, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_guageNeedle = lv_img_create(ui_Screen1);
 lv_img_set_src(ui_guageNeedle, &ui_img_1601502596);
@@ -182,14 +179,13 @@ lv_obj_set_style_bg_opa(ui_guageArc, 0, LV_PART_KNOB| LV_STATE_DEFAULT);
 ui_mainSpeed = lv_label_create(ui_Screen1);
 lv_obj_set_width( ui_mainSpeed, LV_SIZE_CONTENT);  /// 1
 lv_obj_set_height( ui_mainSpeed, LV_SIZE_CONTENT);   /// 1
-lv_obj_set_x( ui_mainSpeed, -47 );
+lv_obj_set_x( ui_mainSpeed, -97 );
 lv_obj_set_y( ui_mainSpeed, 2 );
 lv_obj_set_align( ui_mainSpeed, LV_ALIGN_CENTER );
-lv_label_set_text(ui_mainSpeed,"15");
+lv_label_set_text(ui_mainSpeed,"");
 lv_obj_set_style_text_color(ui_mainSpeed, lv_color_hex(0x05F882), LV_PART_MAIN | LV_STATE_DEFAULT );
 lv_obj_set_style_text_opa(ui_mainSpeed, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_text_align(ui_mainSpeed, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_text_font(ui_mainSpeed, &lv_font_montserrat_48, LV_PART_MAIN| LV_STATE_DEFAULT);
-//lv_obj_set_style_transform_angle(ui_mainSpeed, 900, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 }
