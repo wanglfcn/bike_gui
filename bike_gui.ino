@@ -10,7 +10,7 @@ static const uint16_t screenWidth  = 240;
 static const uint16_t screenHeight = 320;
 
 static lv_disp_draw_buf_t draw_buf;
-static lv_color_t buf[ screenWidth * screenHeight / 10 ];
+static lv_color_t buf[ screenWidth * screenHeight / 4 ];
 
 
 #define TFT_CS   10 //34 //     10 or 34 (FSPI CS0) 
@@ -24,7 +24,7 @@ Adafruit_ST7789 *gfx = new Adafruit_ST7789(TFT_CS, TFT_DC, TFT_MOSI, TFT_SCLK, T
 
 
 // Display flush function for LVGL
-void my_disp_flush2(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p)
+void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p)
 {
     int32_t w = (area->x2 - area->x1 + 1);
     int32_t h = (area->y2 - area->y1 + 1);
@@ -37,18 +37,6 @@ void my_disp_flush2(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *colo
     lv_disp_flush_ready(disp); // Indicate that flushing is done
 }
 
-/* Display flushing */
-void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p) {
-  uint32_t w = (area->x2 - area->x1 + 1);
-  uint32_t h = (area->y2 - area->y1 + 1);
-
-
-  gfx->drawRGBBitmap(area->x1, area->y1, (uint16_t *)&color_p->full, w, h);
-
-
-  lv_disp_flush_ready(disp);
-}
-
 void setup() {
   // put your setup code here, to run once:
    Serial.begin( 115200 ); /* prepare for possible serial debug */
@@ -59,18 +47,17 @@ void setup() {
     Serial.println( LVGL_Arduino );
     Serial.println( "I am LVGL_Arduino" );
     
-    gfx->init(240, 320);
+    //gfx->init(240, 320);
+    gfx->init(240, 320, SPI_MODE3);
+    gfx->setSPISpeed(80000000);   // 80 MHz
     gfx->fillScreen(ST77XX_BLACK);
-//    gfx->Display_Brightness(255);
-
-  //  gfx->setRotation(3);  // Try different rotations: 0, 1, 2, 3
 
     // Initialize LVGL
     Serial.println("Initializing LVGL...");
 
     lv_init();
 
-    lv_disp_draw_buf_init( &draw_buf, buf, NULL, screenWidth * screenHeight / 10 );
+    lv_disp_draw_buf_init( &draw_buf, buf, NULL, screenWidth * screenHeight / 4 );
 
      // Initialize display driver
     static lv_disp_drv_t disp_drv;
