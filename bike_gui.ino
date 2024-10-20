@@ -88,7 +88,9 @@ void setup() {
     // Initialize the user interface
       ui_init();
       initLabelsByCanvas();
-    
+ 
+    updateSpeedAndNeedle(0);
+      
     Serial.println( "Setup done" );
 
 }
@@ -96,6 +98,16 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
     lv_timer_handler(); /* let the GUI do its work */
-    delay( 5 );
-    updateSpeed(11);
+    delay( 50 );
+    for (int i = 0; i <= 25; i ++) {
+      delay(20);
+      lv_timer_handler();
+      updateSpeedAndNeedle(i);
+    }
+    for (int i = 25; i >= 0; i --) {
+      delay(20);
+      lv_timer_handler();
+      updateSpeedAndNeedle(i);
+    }
+
 }

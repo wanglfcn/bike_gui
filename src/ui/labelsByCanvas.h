@@ -38,7 +38,7 @@ static lv_color_t mileage_cbuf_tmp[LV_CANVAS_BUF_SIZE_TRUE_COLOR(MILE_WIDTH, MIL
 void updateSpeed(int speed)
 {
     char data[10];
-    sprintf(data, "%d", speed);
+    sprintf(data, "%2d", speed);
     lv_canvas_fill_bg(speed_canvas, lv_color_black(), LV_OPA_COVER);
     lv_canvas_draw_text(speed_canvas, 15, 20, 100, &speed_label_dsc, data);
 
@@ -165,4 +165,10 @@ void initLabelsByCanvas()
     lv_draw_tempature_by_canvas();
     lv_draw_battery_by_canvas();
     lv_draw_mileage_by_canvas();
+}
+
+void updateSpeedAndNeedle(int speed) {
+    updateSpeed(speed);
+    lv_img_set_angle(ui_guageNeedle, 1445 + speed * 100);
+    lv_arc_set_value(ui_guageArc, speed * 4);
 }
