@@ -5,14 +5,6 @@
 #include <SPI.h>
 #include "src/ui/labelsByCanvas.h"
 
-#define CANVAS_WIDTH  80
-#define CANVAS_HEIGHT  80
-#define TEMP_WIDTH 40
-#define TEMP_HEIGHT 40
-#define BATTERY_WIDTH 40
-#define BATTERY_HEIGHT 40
-#define MILE_WIDTH 60
-#define MILE_HEIGHT 60
 
 static const uint16_t screenWidth  = 240;
 static const uint16_t screenHeight = 320;
@@ -105,4 +97,5 @@ void loop() {
   // put your main code here, to run repeatedly:
     lv_timer_handler(); /* let the GUI do its work */
     delay( 5 );
+    updateSpeed(11);
 }
