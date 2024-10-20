@@ -1,15 +1,9 @@
-#include "src/ui/ui.h"
-/////////////////////////////////////////////////////////////////
-/*
-  Creating Tesla's Website in SquareLine Studio (ESP32+LVGL)
-  Video Tutorial: https://youtu.be/LrvqSjLzo44
-  Created by Eric N. (ThatProject)
-*/
-/////////////////////////////////////////////////////////////////
-
 #include <lvgl.h>
 #define LGFX_USE_V1
 #include <LovyanGFX.hpp>
+#include "src/ui/ui.h"
+#include "src/ui/labelsByCanvas.h"
+
 
 #define TFT_CS   10 //34 //     10 or 34 (FSPI CS0) 
 #define TFT_MOSI 11 //35 //     11 or 35 (FSPI D)
@@ -30,8 +24,8 @@ public:
     { // バス制御の設定を行います。
       auto cfg = _bus_instance.config();    // バス設定用の構造体を取得します。
       cfg.spi_host = SPI2_HOST;     // 使用するSPIを選択  (VSPI_HOST or HSPI_HOST)
-      cfg.spi_mode = 0;             // SPI通信モードを設定 (0 ~ 3)
-      cfg.freq_write = 20000000;    // 送信時のSPIクロック (最大80MHz, 80MHzを整数で割った値に丸められます)
+      cfg.spi_mode = 2;             // SPI通信モードを設定 (0 ~ 3)
+      cfg.freq_write = 40000000;    // 送信時のSPIクロック (最大80MHz, 80MHzを整数で割った値に丸められます)
       cfg.freq_read  = 16000000;    // 受信時のSPIクロック
       cfg.spi_3wire  = false;        // 受信をMOSIピンで行う場合はtrueを設定
       cfg.use_lock   = true;        // トランザクションロックを使用する場合はtrueを設定
@@ -87,8 +81,9 @@ LGFX tft;
 
 /*Change to your screen resolution*/
 static const uint32_t screenWidth  = 240;
-static const uint32_t screenHeight = 350;
+static const uint32_t screenHeight = 320;
 static lv_disp_draw_buf_t draw_buf;
+
 static lv_color_t buf[ screenWidth * 10 ];
 
 /* Display flushing */
@@ -112,8 +107,8 @@ void setup()
    Serial.begin(115200);
 
    tft.begin();        
-   tft.setRotation(1);
-   tft.setBrightness(255);
+   //tft.setRotation(1);
+   //tft.setBrightness(255);
   
 
    lv_init();
@@ -132,10 +127,23 @@ void setup()
 
 
    ui_init();
+   updateSpeedAndNeedle(0);
 }
 
-void loop()
-{
-   lv_timer_handler(); /* let the GUI do its work */
-   delay( 5 );
+
+void loop() {
+  // put your main code here, to run repeatedly:
+    lv_timer_handler(); /* let the GUI do its work */
+    delay( 50 );
+    for (int i = 0; i <= 25; i ++) {
+      delay(20);
+      lv_timer_handler();
+     // updateSpeedAndNeedle(i);
+    }
+    for (int i = 25; i >= 0; i --) {
+      delay(20);
+      lv_timer_handler();
+      //updateSpeedAndNeedle(i);
+    }
+
 }
