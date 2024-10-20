@@ -6,6 +6,12 @@
 
 #define CANVAS_WIDTH  80
 #define CANVAS_HEIGHT  80
+#define TEMP_WIDTH 40
+#define TEMP_HEIGHT 40
+#define BATTERY_WIDTH 40
+#define BATTERY_HEIGHT 40
+#define MILE_WIDTH 60
+#define MILE_HEIGHT 60
 
 static const uint16_t screenWidth  = 240;
 static const uint16_t screenHeight = 320;
@@ -90,6 +96,8 @@ void setup() {
       ui_init();
 lv_draw_main_speed_by_canvas();
 lv_draw_tempature_by_canvas();
+lv_draw_battery_by_canvas();
+lv_draw_mileage_by_canvas();
     
     Serial.println( "Setup done" );
 
@@ -118,8 +126,6 @@ void lv_draw_main_speed_by_canvas(void)
 
     lv_canvas_draw_text(canvas, 15, 20, 100, &label_dsc, "25");
 
-    /*Test the rotation. It requires another buffer where the original image is stored.
-     *So copy the current image to buffer and rotate it to the canvas*/
     static lv_color_t cbuf_tmp[CANVAS_WIDTH * CANVAS_HEIGHT];
     memcpy(cbuf_tmp, cbuf, sizeof(cbuf_tmp));
     lv_img_dsc_t img;
@@ -128,7 +134,6 @@ void lv_draw_main_speed_by_canvas(void)
     img.header.w = CANVAS_WIDTH;
     img.header.h = CANVAS_HEIGHT;
 
-    //lv_canvas_fill_bg(canvas, lv_palette_lighten(LV_PALETTE_NONE, 3), LV_OPA_0);
     lv_canvas_transform(canvas, &img, 900, 256, 0, 0, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2, true);
 }
 
@@ -137,29 +142,84 @@ void lv_draw_tempature_by_canvas()
     lv_draw_label_dsc_t temp_label_dsc;
     lv_draw_label_dsc_init(&temp_label_dsc);
     temp_label_dsc.color = lv_color_white();
-    temp_label_dsc.font = &lv_font_montserrat_12;
-    int width = 40;
-    int height = 40;
+    temp_label_dsc.font = &lv_font_montserrat_14;
 
-    static lv_color_t cbuf[LV_CANVAS_BUF_SIZE_TRUE_COLOR(width, height)];
+
+    static lv_color_t cbuf[LV_CANVAS_BUF_SIZE_TRUE_COLOR(TEMP_WIDTH, TEMP_HEIGHT)];
 
     lv_obj_t * canvas = lv_canvas_create(lv_scr_act());
-    lv_canvas_set_buffer(canvas, cbuf, width, height, LV_IMG_CF_TRUE_COLOR);
+    lv_canvas_set_buffer(canvas, cbuf, TEMP_WIDTH, TEMP_HEIGHT, LV_IMG_CF_TRUE_COLOR);
  
     lv_obj_align_to(canvas, ui_tempature, LV_ALIGN_CENTER, 0, 0);
 
-    lv_canvas_draw_text(canvas, 15, 20, 100, &temp_label_dsc, "30°C");
-
+    lv_canvas_draw_text(canvas, 0, 10, 100, &temp_label_dsc, "30°C");
     /*Test the rotation. It requires another buffer where the original image is stored.
      *So copy the current image to buffer and rotate it to the canvas*/
-    static lv_color_t cbuf_tmp[width * height];
+    static lv_color_t cbuf_tmp[TEMP_WIDTH * TEMP_HEIGHT];
     memcpy(cbuf_tmp, cbuf, sizeof(cbuf_tmp));
     lv_img_dsc_t img;
     img.data = (const uint8_t *)cbuf_tmp;
     img.header.cf = LV_IMG_CF_TRUE_COLOR;
-    img.header.w = width;
-    img.header.h = height;
+    img.header.w = TEMP_WIDTH;
+    img.header.h = TEMP_HEIGHT;
 
-    lv_canvas_fill_bg(canvas, lv_palette_lighten(LV_PALETTE_NONE, 3), LV_OPA_0);
-    lv_canvas_transform(canvas, &img, 900, 256, 0, 0, width / 2, height / 2, true);
+    lv_canvas_transform(canvas, &img, 900, 256, 0, 0, TEMP_WIDTH / 2, TEMP_HEIGHT / 2, true);
+}
+
+void lv_draw_battery_by_canvas()
+{
+    lv_draw_label_dsc_t temp_label_dsc;
+    lv_draw_label_dsc_init(&temp_label_dsc);
+    temp_label_dsc.color = lv_color_white();
+    temp_label_dsc.font = &lv_font_montserrat_14;
+
+
+    static lv_color_t cbuf[LV_CANVAS_BUF_SIZE_TRUE_COLOR(BATTERY_WIDTH, BATTERY_HEIGHT)];
+
+    lv_obj_t * canvas = lv_canvas_create(lv_scr_act());
+    lv_canvas_set_buffer(canvas, cbuf, BATTERY_WIDTH, BATTERY_HEIGHT, LV_IMG_CF_TRUE_COLOR);
+ 
+    lv_obj_align_to(canvas, ui_batteryLevel, LV_ALIGN_CENTER, 0, 0);
+
+    lv_canvas_draw_text(canvas, 0, 10, 100, &temp_label_dsc, "100%");
+    /*Test the rotation. It requires another buffer where the original image is stored.
+     *So copy the current image to buffer and rotate it to the canvas*/
+    static lv_color_t cbuf_tmp[BATTERY_WIDTH * BATTERY_HEIGHT];
+    memcpy(cbuf_tmp, cbuf, sizeof(cbuf_tmp));
+    lv_img_dsc_t img;
+    img.data = (const uint8_t *)cbuf_tmp;
+    img.header.cf = LV_IMG_CF_TRUE_COLOR;
+    img.header.w = BATTERY_WIDTH;
+    img.header.h = BATTERY_HEIGHT;
+
+    lv_canvas_transform(canvas, &img, 900, 256, 0, 0, BATTERY_WIDTH / 2, BATTERY_HEIGHT / 2, true);
+}
+
+void lv_draw_mileage_by_canvas()
+{
+    lv_draw_label_dsc_t temp_label_dsc;
+    lv_draw_label_dsc_init(&temp_label_dsc);
+    temp_label_dsc.color = lv_color_white();
+    temp_label_dsc.font = &lv_font_montserrat_14;
+
+
+    static lv_color_t cbuf[LV_CANVAS_BUF_SIZE_TRUE_COLOR(MILE_WIDTH, MILE_HEIGHT)];
+
+    lv_obj_t * canvas = lv_canvas_create(lv_scr_act());
+    lv_canvas_set_buffer(canvas, cbuf, MILE_WIDTH, MILE_HEIGHT, LV_IMG_CF_TRUE_COLOR);
+ 
+    lv_obj_align_to(canvas, ui_mileAge, LV_ALIGN_CENTER, 0, 0);
+
+    lv_canvas_draw_text(canvas, 0, 30, 100, &temp_label_dsc, "100km");
+    /*Test the rotation. It requires another buffer where the original image is stored.
+     *So copy the current image to buffer and rotate it to the canvas*/
+    static lv_color_t cbuf_tmp[MILE_WIDTH * MILE_HEIGHT];
+    memcpy(cbuf_tmp, cbuf, sizeof(cbuf_tmp));
+    lv_img_dsc_t img;
+    img.data = (const uint8_t *)cbuf_tmp;
+    img.header.cf = LV_IMG_CF_TRUE_COLOR;
+    img.header.w = MILE_WIDTH;
+    img.header.h = MILE_HEIGHT;
+
+    lv_canvas_transform(canvas, &img, 900, 256, 0, 0, MILE_WIDTH / 2, MILE_HEIGHT / 2, true);
 }
