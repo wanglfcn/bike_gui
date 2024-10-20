@@ -4,6 +4,8 @@
 #include <Adafruit_ST7789.h> // Hardware-specific library for ST7789
 #include <SPI.h>
 
+#define CANVAS_WIDTH  80
+#define CANVAS_HEIGHT  40
 
 static const uint16_t screenWidth  = 240;
 static const uint16_t screenHeight = 320;
@@ -16,15 +18,14 @@ static lv_color_t buf[ screenWidth * screenHeight / 10 ];
 #define TFT_MOSI 11 //35 //     11 or 35 (FSPI D)
 #define TFT_SCLK 12 //36 //     12 or 36 (FSPI CLK)
 #define TFT_MISO 13 //37 //     13 or 37 (FSPI Q)
-// Use pins in range 0-31
-#define TFT_DC    7
-#define TFT_RST   6
+#define TFT_DC    3
+#define TFT_RST   8
 
 Adafruit_ST7789 *gfx = new Adafruit_ST7789(TFT_CS, TFT_DC, TFT_MOSI, TFT_SCLK, TFT_RST);
 
 
 // Display flush function for LVGL
-void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p)
+void my_disp_flush2(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p)
 {
     int32_t w = (area->x2 - area->x1 + 1);
     int32_t h = (area->y2 - area->y1 + 1);
@@ -35,6 +36,18 @@ void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color
     gfx->endWrite();
 
     lv_disp_flush_ready(disp); // Indicate that flushing is done
+}
+
+/* Display flushing */
+void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p) {
+  uint32_t w = (area->x2 - area->x1 + 1);
+  uint32_t h = (area->y2 - area->y1 + 1);
+
+
+  gfx->drawRGBBitmap(area->x1, area->y1, (uint16_t *)&color_p->full, w, h);
+
+
+  lv_disp_flush_ready(disp);
 }
 
 void setup() {
@@ -51,7 +64,7 @@ void setup() {
     gfx->fillScreen(ST77XX_BLACK);
 //    gfx->Display_Brightness(255);
 
-    // gfx->setRotation(1);  // Try different rotations: 0, 1, 2, 3
+  //  gfx->setRotation(3);  // Try different rotations: 0, 1, 2, 3
 
     // Initialize LVGL
     Serial.println("Initializing LVGL...");
@@ -67,6 +80,7 @@ void setup() {
     disp_drv.ver_res = screenHeight;
     disp_drv.flush_cb = my_disp_flush;
     disp_drv.draw_buf = &draw_buf;
+    //disp_drv.full_refresh = 1;
     lv_disp_drv_register(&disp_drv);
     Serial.println("Display driver registered.");
 
@@ -74,6 +88,7 @@ void setup() {
 
     // Initialize the user interface
       ui_init();
+
     
     Serial.println( "Setup done" );
 
@@ -83,4 +98,50 @@ void loop() {
   // put your main code here, to run repeatedly:
     lv_timer_handler(); /* let the GUI do its work */
     delay( 5 );
+}
+
+
+void lv_draw_main_speed_by_canvas(void)
+{
+    lv_draw_rect_dsc_t rect_dsc;
+    lv_draw_rect_dsc_init(&rect_dsc);
+    rect_dsc.radius = 10;
+    rect_dsc.bg_opa = LV_OPA_COVER;
+    rect_dsc.bg_grad.dir = LV_GRAD_DIR_HOR;
+    rect_dsc.bg_grad.stops[0].color = lv_palette_main(LV_PALETTE_RED);
+    rect_dsc.bg_grad.stops[1].color = lv_palette_main(LV_PALETTE_BLUE);
+    rect_dsc.border_width = 2;
+    rect_dsc.border_opa = LV_OPA_90;
+    rect_dsc.border_color = lv_color_black();
+    rect_dsc.shadow_width = 5;
+    rect_dsc.shadow_ofs_x = 5;
+    rect_dsc.shadow_ofs_y = 5;
+
+    lv_draw_label_dsc_t label_dsc;
+    lv_draw_label_dsc_init(&label_dsc);
+    label_dsc.color = lv_palette_main(LV_PALETTE_LIGHT_GREEN);
+
+    static lv_color_t cbuf[LV_CANVAS_BUF_SIZE_TRUE_COLOR(CANVAS_WIDTH, CANVAS_HEIGHT)];
+
+    lv_obj_t * canvas = lv_canvas_create(lv_scr_act());
+    lv_canvas_set_buffer(canvas, cbuf, CANVAS_WIDTH, CANVAS_HEIGHT, LV_IMG_CF_TRUE_COLOR);
+    lv_obj_center(canvas);
+    lv_canvas_fill_bg(canvas, lv_palette_lighten(LV_PALETTE_GREY, 3), LV_OPA_COVER);
+
+    lv_canvas_draw_rect(canvas, 70, 60, 100, 70, &rect_dsc);
+
+    lv_canvas_draw_text(canvas, 40, 20, 100, &label_dsc, "12");
+
+    /*Test the rotation. It requires another buffer where the original image is stored.
+     *So copy the current image to buffer and rotate it to the canvas*/
+    static lv_color_t cbuf_tmp[CANVAS_WIDTH * CANVAS_HEIGHT];
+    memcpy(cbuf_tmp, cbuf, sizeof(cbuf_tmp));
+    lv_img_dsc_t img;
+    img.data = (void *)cbuf_tmp;
+    img.header.cf = LV_IMG_CF_TRUE_COLOR;
+    img.header.w = CANVAS_WIDTH;
+    img.header.h = CANVAS_HEIGHT;
+
+    lv_canvas_fill_bg(canvas, lv_palette_lighten(LV_PALETTE_NONE, 3), LV_OPA_COVER);
+    lv_canvas_transform(canvas, &img, 120, LV_IMG_ZOOM_NONE, 0, 0, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2, true);
 }
