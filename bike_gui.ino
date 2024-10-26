@@ -16,8 +16,8 @@
 #define TFT_MOSI 11 //35 //     11 or 35 (FSPI D)
 #define TFT_SCLK 12 //36 //     12 or 36 (
 #define TFT_MISO 13 //37 //     13 or 37 (FSPI Q)
-#define TFT_DC    3
-#define TFT_RST   8
+#define TFT_DC    8
+#define TFT_RST   3
 
 class LGFX : public lgfx::LGFX_Device
 {
