@@ -2,15 +2,23 @@ SET(SOURCES screens/ui_Screen1.c
     ui.c
     components/ui_comp_hook.c
     ui_helpers.c
-    images/ui_img_background_png.c
+    images/ui_img_bg_png.c
+    images/ui_img_guage_bg_png.c
+    images/ui_img_guage_indicator_png.c
+    images/ui_img_compas_png.c
+    images/ui_img_compass_overlay_png.c
+    images/ui_img_devider_png.c
+    images/ui_img_guage_bg_1_png.c
+    images/ui_img_battery_bg_png.c
+    images/ui_img_battery_indicator_png.c
+    images/ui_img_temperature_png.c
     images/ui_img_left_arr_png.c
     images/ui_img_light_png.c
-    images/ui_img_batt_full_png.c
-    images/ui_img_batt_mid_png.c
-    images/ui_img_batt_low2_png.c
-    images/ui_img_batt_low_png.c
-    images/ui_img_temperature_png.c
-    images/ui_img_1601502596.c
-    images/ui_img_1798728470.c)
+    images/ui_img_range_bg_png.c
+    images/ui_img_range_knob_png.c
+    images/ui_img_clk2_png.c
+    fonts/ui_font_HollowPoint.c
+    fonts/ui_font_HollowPoint22.c
+    fonts/ui_font_HollowPoint32.c)
 
 add_library(ui ${SOURCES})

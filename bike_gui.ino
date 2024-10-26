@@ -1,12 +1,4 @@
 #include "src/ui/ui.h"
-#include "src/ui/labelsByCanvas.h"
-/////////////////////////////////////////////////////////////////
-/*
-  Creating Tesla's Website in SquareLine Studio (ESP32+LVGL)
-  Video Tutorial: https://youtu.be/LrvqSjLzo44
-  Created by Eric N. (ThatProject)
-*/
-/////////////////////////////////////////////////////////////////
 
 #include <lvgl.h>
 #define LGFX_USE_V1
@@ -126,30 +118,19 @@ void setup()
    /*Change the following line to your display resolution*/
    disp_drv.hor_res = screenWidth;
    disp_drv.ver_res = screenHeight;
+   disp_drv.sw_rotate = 1;
+	 disp_drv.rotated = LV_DISP_ROT_90;
    disp_drv.flush_cb = my_disp_flush;
    disp_drv.draw_buf = &draw_buf;
    lv_disp_drv_register(&disp_drv);
 
 
    ui_init();
-   initLabelsByCanvas();
- 
-    updateSpeedAndNeedle(0);
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
     lv_timer_handler(); /* let the GUI do its work */
     delay( 50 );
-    for (int i = 0; i <= 25; i ++) {
-      delay(20);
-      lv_timer_handler();
-      updateSpeedAndNeedle(i);
-    }
-    for (int i = 25; i >= 0; i --) {
-      delay(20);
-      lv_timer_handler();
-      updateSpeedAndNeedle(i);
-    }
 
 }
