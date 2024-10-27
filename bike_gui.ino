@@ -3,6 +3,7 @@
 #include <lvgl.h>
 #define LGFX_USE_V1
 #include <LovyanGFX.hpp>
+#include "src/button.h"
 
 #define TFT_CS   10 //34 //     10 or 34 (FSPI CS0) 
 #define TFT_MOSI 11 //35 //     11 or 35 (FSPI D)
@@ -84,6 +85,8 @@ static const uint32_t screenHeight = 320;
 static lv_disp_draw_buf_t draw_buf;
 static lv_color_t buf[ screenWidth * 10 ];
 
+unsigned long refreshLcdTs = 0;
+
 /* Display flushing */
 void my_disp_flush( lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p )
 {
@@ -126,11 +129,40 @@ void setup()
 
 
    ui_init();
+   initBtn();
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-    lv_timer_handler(); /* let the GUI do its work */
-    delay( 50 );
+  unsigned long now = millis();
+  updateStatus(now);
+  refreshLcd(now);
 
+
+}
+
+void testSpeed() {
+    char data[10];
+    for (int i = 0; i <= 100; i ++) {
+      sprintf(data, "%d", i/5);
+      lv_label_set_text(ui_speedValue,data);
+      lv_bar_set_value(ui_speedBar,i ,LV_ANIM_OFF);
+      lv_timer_handler(); /* let the GUI do its work */
+      delay( 1 );
+    }
+
+        for (int i = 100; i >= 0; i --) {
+      sprintf(data, "%d", i/5);
+      lv_label_set_text(ui_speedValue,data);
+      lv_bar_set_value(ui_speedBar,i ,LV_ANIM_OFF);
+      lv_timer_handler(); /* let the GUI do its work */
+      delay( 1 );
+    }
+}
+
+void refreshLcd(unsigned long now) {
+  if ((now - refreshLcdTs) < 25) {
+    return;
+  }
+  refreshLcdTs = now;
+  lv_timer_handler(); /* let the GUI do its work */
 }
