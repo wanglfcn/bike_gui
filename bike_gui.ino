@@ -4,6 +4,7 @@
 #define LGFX_USE_V1
 #include <LovyanGFX.hpp>
 #include "src/button.h"
+#include "src/speed.h"
 
 #define TFT_CS   10 //34 //     10 or 34 (FSPI CS0) 
 #define TFT_MOSI 11 //35 //     11 or 35 (FSPI D)
@@ -130,14 +131,17 @@ void setup()
 
    ui_init();
    initBtn();
+   initSensor();
 }
 
 void loop() {
   unsigned long now = millis();
   updateStatus(now);
+
+  updateSensor(now);
+
+
   refreshLcd(now);
-
-
 }
 
 void testSpeed() {

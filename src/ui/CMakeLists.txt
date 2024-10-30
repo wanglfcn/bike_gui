@@ -10,7 +10,6 @@ SET(SOURCES screens/ui_Screen1.c
     images/ui_img_devider_png.c
     images/ui_img_guage_bg_1_png.c
     images/ui_img_battery_bg_png.c
-    images/ui_img_battery_indicator_png.c
     images/ui_img_temperature_png.c
     images/ui_img_left_arr_png.c
     images/ui_img_light_png.c

@@ -24,7 +24,6 @@ extern lv_obj_t *ui_compassOverlay;
 extern lv_obj_t *ui_background;
 extern lv_obj_t *ui_Image4;
 extern lv_obj_t *ui_Image1;
-extern lv_obj_t *ui_batteryBg;
 extern lv_obj_t *ui_batteryLevel;
 extern lv_obj_t *ui_Image3;
 extern lv_obj_t *ui_leftArr;
@@ -39,6 +38,7 @@ extern lv_obj_t *ui_currentMile;
 extern lv_obj_t *ui_Image9;
 extern lv_obj_t *ui_Image10;
 extern lv_obj_t *ui_timeCost;
+extern lv_obj_t *ui_batteryInd;
 extern lv_obj_t *ui____initial_actions0;
 
 LV_IMG_DECLARE( ui_img_bg_png);   // assets/bg.png
@@ -49,7 +49,6 @@ LV_IMG_DECLARE( ui_img_compass_overlay_png);   // assets/compass overlay.png
 LV_IMG_DECLARE( ui_img_devider_png);   // assets/devider.png
 LV_IMG_DECLARE( ui_img_guage_bg_1_png);   // assets/guage bg_1.png
 LV_IMG_DECLARE( ui_img_battery_bg_png);   // assets/battery bg.png
-LV_IMG_DECLARE( ui_img_battery_indicator_png);   // assets/battery indicator.png
 LV_IMG_DECLARE( ui_img_temperature_png);   // assets/temperature.png
 LV_IMG_DECLARE( ui_img_left_arr_png);   // assets/left_arr.png
 LV_IMG_DECLARE( ui_img_light_png);   // assets/light.png
